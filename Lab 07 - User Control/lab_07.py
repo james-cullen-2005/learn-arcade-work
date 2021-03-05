@@ -5,42 +5,26 @@ SCREEN_HEIGHT = 480
 
 
 class Ball:
-    """ This class manages a ball bouncing on the screen. """
-
-    def __init__(self, position_x, position_y, change_x, change_y, radius, color):
-        """ Constructor. """
+    def __init__(self, position_x, position_y, radius, color):
 
         # Take the parameters of the init function above, and create instance variables out of them.
         self.position_x = position_x
         self.position_y = position_y
-        self.change_x = change_x
-        self.change_y = change_y
         self.radius = radius
         self.color = color
 
     def draw(self):
-        """ Draw the balls with the instance variables we have. """
-        arcade.draw_circle_filled(self.position_x, self.position_y, self.radius, self.color)
+ 
+        arcade.draw_circle_filled(self.position_x, self.position_y - 40, 60, arcade.color.WHITE)
+        arcade.draw_circle_filled(self.position_x, self.position_y, 50, arcade.color.WHITE)
+        arcade.draw_circle_filled(self.position_x, self.position_y + 40, 40, arcade.color.WHITE)
 
-    def update(self):
-        """ Code to control the ball's movement. """
-
-        # Move the ball
-        self.position_y += self.change_y
-        self.position_x += self.change_x
-
-        # See if the ball hit the edge of the screen. If so, change direction
-        if self.position_x < self.radius:
-            self.change_x *= -1
-
-        if self.position_x > SCREEN_WIDTH - self.radius:
-            self.change_x *= -1
-
-        if self.position_y < self.radius:
-            self.change_y *= -1
-
-        if self.position_y > SCREEN_HEIGHT - self.radius:
-            self.change_y *= -1
+   
+        arcade.draw_circle_filled(self.position_x + 10, self.position_y + 40, 5, arcade.color.BLACK)
+        arcade.draw_circle_filled(self.position_x - 10, self.position_y + 40, 5, arcade.color.BLACK)
+        arcade.draw_circle_filled(self.position_x , self.position_y - 10, 5, arcade.color.BLACK)
+        arcade.draw_circle_filled(self.position_x , self.position_y - 20, 5, arcade.color.BLACK)
+        arcade.draw_circle_filled(self.position_x , self.position_y - 30, 5, arcade.color.BLACK)
 
 
 class MyGame(arcade.Window):
@@ -49,48 +33,29 @@ class MyGame(arcade.Window):
 
         # Call the parent class's init function
         super().__init__(width, height, title)
-        arcade.set_background_color(arcade.color.ASH_GREY)
 
-        # Create a list for the balls
-        self.ball_list = []
+        # Make the mouse disappear when it is over the window.
+        # So we just see our object, not the pointer.
+        self.set_mouse_visible(False)
 
-        # Add three balls to the list
-        ball = Ball(85, 250, 3, 2, 80, arcade.color.AUBURN)
-        self.ball_list.append(ball)
+        arcade.set_background_color(arcade.color.DARK_BLUE)
 
-        ball = Ball(100, 250, 3, 2, 90, arcade.color.PURPLE_MOUNTAIN_MAJESTY)
-        self.ball_list.append(ball)
-
-        ball = Ball(150, 250, 3, 2, 24, arcade.color.FOREST_GREEN)
-        self.ball_list.append(ball)
-
-        ball = Ball(200, 250, 3, 2, 15, arcade.color.RED)
-        self.ball_list.append(ball)
-
-        ball = Ball(250, 250, 3, 2, 30, arcade.color.YELLOW)
-        self.ball_list.append(ball)
+        # Create our ball
+        self.ball = Ball(50, 50, 15, arcade.color.AUBURN)
 
     def on_draw(self):
         """ Called whenever we need to draw the window. """
         arcade.start_render()
+        self.ball.draw()
 
-        # Use a "for" loop to pull each ball from the list, then call the draw
-        # method on that ball.
-        for ball in self.ball_list:
-            ball.draw()
-
-    def update(self, delta_time):
+    def on_mouse_motion(self, x, y, dx, dy):
         """ Called to update our objects. Happens approximately 60 times per second."""
-
-        # Use a "for" loop to pull each ball from the list, then call the update
-        # method on that ball.
-        for ball in self.ball_list:
-            ball.update()
+        self.ball.position_x = x
+        self.ball.position_y = y
 
 
 def main():
-    window = MyGame(640, 480, "balls")
-
+    window = MyGame(640, 480, "window")
     arcade.run()
 
 

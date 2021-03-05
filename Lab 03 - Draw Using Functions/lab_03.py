@@ -4,12 +4,14 @@ import arcade
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-A = 100
+A = 50
+B = 50 
+
+
 
 
 
 def snowman (x, y):
-
      # Snow
     arcade.draw_circle_filled(300+x, 200+y, 60, arcade.color.WHITE)
     arcade.draw_circle_filled(300+x, 280+y, 50, arcade.color.WHITE)
@@ -24,6 +26,7 @@ def snowman (x, y):
 
 def on_draw(delta_time):
     global A
+    global B
 
     arcade.start_render()
     # Draw the ground
@@ -31,7 +34,8 @@ def on_draw(delta_time):
 
     
     A = A + 1
-    snowman(A, 10)
+    B = B + 2
+    snowman(A, B)
 
 
 
@@ -39,10 +43,10 @@ def main():
     arcade.open_window(SCREEN_WIDTH, SCREEN_HEIGHT, "Drawing with Functions")
     arcade.set_background_color(arcade.color.DARK_BLUE)
     
-      # Draw a snow person
+      
  
     arcade.schedule(on_draw, 1/60)
-    #  Finish and run
+    
     arcade.run()
    
 

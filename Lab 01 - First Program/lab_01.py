@@ -1,1 +1,5 @@
-print("hello world")
+print("hello")
+print("everyone")
+print("my name")
+print("is james")
+print("this is me speaking \"hello\"")
